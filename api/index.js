@@ -70,7 +70,7 @@ export default async ({query: {email}}, res) => {
                 }
             },
             comment: comment,
-            paystatus: payed
+            paystatus: payed == 'FALSE' ? false : true
         }
     }
     
