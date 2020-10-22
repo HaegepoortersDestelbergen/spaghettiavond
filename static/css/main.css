@@ -1,0 +1,38 @@
+body {
+    /* font-family: sofia-pro, sans-serif;
+    font-weight: 400;
+    font-style: normal; */
+    
+    /* font-family: basic-sans, sans-serif;
+    font-weight: 400;
+    font-style: normal; */
+    
+    font-family: parisplus-std,sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.card {
+    /* background-color: rgb(241, 241, 241);
+    background: aliceblue; */
+    background: white;
+    box-shadow: 0px 6px 20px aliceblue;
+    border-radius: 14px;
+    padding: 2rem;
+    width: 100%;
+    border: none;
+    margin-bottom: 2rem;
+}
+
+.card * {
+    color: rgb(69, 122, 168);
+}
+
+.text--modern {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: sofia-pro, sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #b1b1b1;
+}
