@@ -1,8 +1,5 @@
-// const fetch = require('node-fetch');
-// const csv = require('csvtojson')
-
-import fetch from 'node-fetch';
 // import * as csv from 'csvtojson';
+import fetch from 'node-fetch';
 
 export default async (req, res) => {
     console.log(req)
