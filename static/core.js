@@ -35,7 +35,7 @@ const renderOrders = (data) => {
             <hr>
             <div class="card__footer d-flex justify-content-between">
                 <p class="mb-0 text--modern">${order.timestamp}</p>
-                <p class="mb-0 text--modern" class="order__pay-status">niet betaald</p>
+                <p class="mb-0 text--modern" class="order__pay-status" data-status="${order.payStatus}">niet betaald</p>
             </div>
         `);
         item.append('[data-label="orderList"]');
