@@ -8,8 +8,8 @@ const getOrderData = async (userEmail = email) => {
 }
 
 const renderOrders = (data) => {
-    data.forEach((order, index) => {
-        console.log(order);
+    data.forEach((o, index) => {
+        const { toppings } = o.order
         const item = new Element('article');
         item.class(['card', 'order', 'animate__animated', 'animate__fadeInUp', 'animate__fast']);
         item.attributes([
@@ -18,24 +18,47 @@ const renderOrders = (data) => {
         item.inner(`
             <div class="card__header mb-4 d-flex">
                 <div class="order__no mr-3">
-                    ${order.orderNo}
+                    ${o.orderNo}
                 </div>
                 <div>
                     <h4 class="mb-0">Bestelling </h4>
-                    ${order.method == 'Ophalen' ? 
-                        `<small class="text--modern">${order.method} van ${order.timeslot}</small>` :  
-                        `<small class="text--modern">${order.method} tussen 18u en 20u</small>`
+                    ${o.method == 'Ophalen' ? 
+                        `<small class="text--modern order__method">${o.method} van ${o.timeslot}</small>` :  
+                        `<small class="text--modern order__method"><i data-feather="truck" class="mr-2"></i> bezorging tussen 18u en 20u</small>`
                     }
                 </div>
             </div>
-            <div class="card__body mb-4">
-                <h5 class="text--modern">Details</h5>
-                <p>Orderdetails</p>
+            <div class="card__body mb-0">
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="mb-3">
+                            <h5 class="text--modern">Klaargemaakte porties</h5>
+                            <p class="mb-0">Kinder <span class="text--var">${o.order.readyToEat.kids} porties</span> &nbsp – &nbsp Volwassen <span class="text--var">${o.order.readyToEat.adult} porties</span></p>
+                        </div>
+                        <div class="mb-3">
+                            <h5 class="text--modern">Saus</h5>
+                            <p class="mb-0">0,5 kilo <span class="text--var">${o.order.sauce.small} pot${o.order.sauce.small == 1 ? '' : 'ten'}</span> &nbsp – &nbsp 1 kilo <span class="text--var">${o.order.sauce.bigg} pot${o.order.sauce.bigg == 1 ? '' : 'ten'}</span></p>
+                            <p class="mb-0"></p>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <h5 class="text--modern">Toppings</h5>
+                        <p class="mb-0">Kaas <span class="text--var">${toppings.cheese}</span></p>
+                        <p class="mb-0">Parmezaan <span class="text--var">${toppings.parmezan}</span></p>
+                        <p class="mb-0">Spekjes <span class="text--var">${toppings.bacon}</span></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <h5 class="text--modern">Totaal</h5>
+                        <h3>€53</h3>
+                    </div>
+                </div>
             </div>
             <hr>
             <div class="card__footer d-flex justify-content-between">
-                <p class="mb-0 text--modern">${order.timestamp}</p>
-                <p class="mb-0 text--modern" class="order__pay-status" data-status="${order.payStatus}">niet betaald</p>
+                <p class="mb-0 text--modern">${o.timestamp}</p>
+                <p class="mb-0 text--modern order__pay-status" data-status="${o.payStatus}">${o.payStatus == true ? 'betaald' : 'niet betaald'}</p>
             </div>
         `);
         item.append('[data-label="orderList"]');
@@ -45,6 +68,7 @@ const renderOrders = (data) => {
 getOrderData().then(data => {
     node('[data-label="orderList"]').innerHTML = '';
     renderOrders(data);
+    feather.replace();
 });
 
 
