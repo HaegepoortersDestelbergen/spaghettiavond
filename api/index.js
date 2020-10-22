@@ -42,12 +42,12 @@ export default async ({query: {email}}, res) => {
             order: {
                 ownBox: ownBox,
                 readyToEat: {
-                    kids: readyKids,
-                    adult: readyAdult
+                    kids: parseFloat(readyKids),
+                    adult: parseFloat(readyAdult)
                 },
                 sauce: {
-                    small: portionSmall,
-                    bigg: portionBig,
+                    small: parseFloat(portionSmall),
+                    bigg: parseFloat(portionBig),
                 },
                 toppings: {
                     cheese: toppingCheese,
