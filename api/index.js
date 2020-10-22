@@ -8,7 +8,6 @@ const { SHEET_URI } = process.env
 module.exports = async (req, res) => {
     const {email} = req.query
     
-    const getResponses = () => {
         fetch(SHEET_URI)
         .then(res => res.text())
         .then(async (data) => {
@@ -24,7 +23,6 @@ module.exports = async (req, res) => {
             })
         })
         .catch(err => {console.log(err)})
-    }
     
     
     
