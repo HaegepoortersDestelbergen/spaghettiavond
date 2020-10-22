@@ -8,7 +8,7 @@ const { SHEET_URI } = process.env
 module.exports = async (req, res) => {
     // const {email} = req.query
     
-    fetch(SHEET_URI)
+    fetch(`https://api.allorigins.win/get?url=${SHEET_URI}`)
     .then(res => res.text())
     .then(async (data) => {
         csv({
