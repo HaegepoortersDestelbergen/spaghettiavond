@@ -1,20 +1,31 @@
 // const fetch = require('node-fetch');
 // const csv = require('csvtojson')
 
-import * as fetch from 'node-fetch';
+import fetch from 'node-fetch';
 // import * as csv from 'csvtojson';
 
-export default (req, res) => {
-    // res.send('data');
+export default async (req, res) => {
+    console.log(req)
+    const prom = () => {
+        return new Promise((resolve, reject) => {
+            fetch(`https://api.allorigins.win/get?url=https://raw.githubusercontent.com/lennertderyck/photo-sorter/master/package.json`, {
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            })
+            .then(body => {return body.json()})
+            .then((data) => {
+                resolve(data);
+            })
+            .catch((err) => {
+                reject(err)
+            })
+        })
+    }
     
-    fetch(`https://api.allorigins.win/get?url=https://raw.githubusercontent.com/lennertderyck/photo-sorter/master/package.json`, {
-        mode: 'no-cors',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-    })
-    .then(body => body.json())
-    .then((data) => res.send(data))
+    const data = await prom();
+    res.send(await data);
     
     // fetch(`https://api.allorigins.win/get?url=https://docs.google.com/spreadsheets/d/e/2PACX-1vRAMUFYniXHfMzwlr7Ir6U113p1XgXpQt4F1YP_Y0fUUANBx74Aga1rkMjBM9GlD47vx3GHWr6JRI-y/pub?output=csv`)
     // .then(resp => resp.json())
