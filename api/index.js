@@ -4,7 +4,7 @@ import fetch from 'node-fetch';
 export default async ({query: {email}}, res) => {    
     const getSheetData = () => {
         return new Promise((resolve, reject) => {
-            fetch(`https://docs.google.com/spreadsheets/d/e/2PACX-1vRAMUFYniXHfMzwlr7Ir6U113p1XgXpQt4F1YP_Y0fUUANBx74Aga1rkMjBM9GlD47vx3GHWr6JRI-y/pub?output=csv`)
+            fetch(`https://docs.google.com/spreadsheets/d/e/2PACX-1vS0ayM3oqWsPU1sSnSWBsn9YNL8nWrwA6jOwCu4Z-z7ADyHADcrN2LFxiSLMydGnzzUpQ9iJjWDSQxh/pub?output=csv`)
             .then(response => response.text())
             .then(async (data) => {
                 csv.default({
@@ -13,8 +13,9 @@ export default async ({query: {email}}, res) => {
                 })
                 .fromString(data)
                 .then((csvRow)=>{ 
+                    console.log(csvRow[0])
                     const l = csvRow.length;
-                    const lel = csvRow.slice(3, l);
+                    const lel = csvRow.slice(0, l);
                     resolve(lel)
                 })
             })
@@ -29,9 +30,38 @@ export default async ({query: {email}}, res) => {
         return await data.filter((r) => r[1] == email);
     }
     
+    Array.prototype.convertToObject = function () {
+        const [timestamp, email, name, method, address, timeslot, ownBox, readyKids, readyAdult, portionSmall, portionBig, toppingCheese, toppingParmezan, toppingBacon] = this;
+        return {
+            timestamp: timestamp,
+            email: email,
+            name: name,
+            method: method,
+            address: address,
+            timeslot: timeslot,
+            order: {
+                ownBox: ownBox,
+                readyToEat: {
+                    kids: readyKids,
+                    adult: readyAdult
+                },
+                sauce: {
+                    small: portionSmall,
+                    bigg: portionBig,
+                },
+                toppings: {
+                    cheese: toppingCheese,
+                    parmezan: toppingParmezan,
+                    bacon: toppingBacon
+                }
+            }
+        }
+    }
+    
     if (email) {
         const data = await getRecordByEmail(email);
-        res.send(data);
+        const readable = data.map(order => order.convertToObject());
+        res.send(readable);
     } else {
         res.send({
             error: 'email was undefined'
