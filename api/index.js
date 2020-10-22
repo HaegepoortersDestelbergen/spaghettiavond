@@ -17,6 +17,7 @@ module.exports = async (req, res) => {
         })
         .fromString(data)
         .then((csvRow)=>{ 
+            console.log(csvRow);
             // const l = csvRow.length;
             // const lel = csvRow.slice(3, l);
             // res.send(lel);
