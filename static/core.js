@@ -1,5 +1,9 @@
 import { node, Element, Api } from 'https://unpkg.com/cutleryjs/dist/js/index.js'
 
+/**
+ * TODO: if email defined, get by email, by method defined, get by method, ...
+ */
+
 const url = new URL(window.location.href);
 const email = url.searchParams.get('email');
 
