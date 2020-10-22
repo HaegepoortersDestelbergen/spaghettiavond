@@ -1,7 +1,6 @@
 // const fetch = require('node-fetch');
 // const csv = require('csvtojson')
 
-import * as fetch from 'node-fetch';
 // import * as csv from 'csvtojson';
 
 export default (req, res) => {
