@@ -14,10 +14,9 @@ export default async (req, res) => {
         })
         .fromString(data)
         .then((csvRow)=>{ 
-            // const l = csvRow.length;
-            // const lel = csvRow.slice(3, l);
-            // res.send(lel);
-            res.send(csvRow);
+            const l = csvRow.length;
+            const lel = csvRow.slice(3, l);
+            res.send(lel);
         })
     })
     .catch(err => {res.send(err)})
