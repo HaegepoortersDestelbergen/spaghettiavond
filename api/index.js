@@ -1,14 +1,10 @@
-const GSheetReader = require('g-sheets-api');
-const request=require('request')
 const fetch = require('node-fetch');
 const csv = require('csvtojson')
-
-const { SHEET_URI } = process.env
 
 module.exports = async (req, res) => {
     // const {email} = req.query
     
-    fetch(`https://api.allorigins.win/get?url=${SHEET_URI}`)
+    fetch(`https://api.allorigins.win/get?url=https://docs.google.com/spreadsheets/d/e/2PACX-1vRAMUFYniXHfMzwlr7Ir6U113p1XgXpQt4F1YP_Y0fUUANBx74Aga1rkMjBM9GlD47vx3GHWr6JRI-y/pub?output=csv`)
     .then(res => res.text())
     .then(async (data) => {
         csv({
