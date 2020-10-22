@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
     .then(res => res.text())
     .then(async (data) => {
         csv({
-            noheader:true,
+            noheader: true,
             output: "csv"
         })
         .fromString(data)
@@ -24,5 +24,5 @@ module.exports = async (req, res) => {
             res.send(csvRow);
         })
     })
-    .catch(err => {console.log(err)})
+    .catch(err => {res.send(err)})
 }
