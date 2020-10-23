@@ -110,7 +110,8 @@ body {
     &__wrapper {
         // margin: 0 3rem;
         padding: 1.4rem 1.4rem 1.2rem 1.4rem;
-        background-color: #0260b1;
+        // background-color: #0260b1;
+        background: linear-gradient(90deg, rgb(46, 136, 214) 0%, rgba(2,96,177,1) 100%);
         border-radius: 1rem 1rem 0rem 0rem;
         
         h3.text--modern {
