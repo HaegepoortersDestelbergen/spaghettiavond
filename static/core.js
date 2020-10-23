@@ -8,7 +8,7 @@ const url = new URL(window.location.href);
 const email = url.searchParams.get('email') || 'Geen emailadres opgegeven';
 
 const getOrderData = async (userEmail = email) => {
-    return await new Api(`https://spaghetti.haegepoorters.be/api?email=${userEmail}`).JSON();
+    return await new Api(`${window.location.origin}/api${window.location.search}`).JSON();
 }
 
 const renderOrders = (data) => {
@@ -97,6 +97,7 @@ const stringToPrice = (answer, priceObj) => {
 }
 
 getOrderData().then(data => {
+    console.log(data);
     node('[data-label="orderList"]').innerHTML = '';
     renderOrders(data);
     feather.replace();
