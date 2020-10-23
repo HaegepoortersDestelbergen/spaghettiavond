@@ -168,3 +168,15 @@ getOrderData().then(data => {
 });
 
 node('[data-label="userEmail"]').innerHTML = email;
+
+Mousetrap.bind(['command+f', 'control+f'], (event) => {
+    const form = node('[data-label="formInput"]').classList;
+    event.preventDefault();
+    if (form.contains('d-none')) {
+        form.remove('d-none');
+        form.add('d-block');
+    } else {
+        form.add('d-none');
+        form.remove('d-block');
+    }
+});
