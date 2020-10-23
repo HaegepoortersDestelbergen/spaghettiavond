@@ -44,8 +44,8 @@ const renderOrders = (data) => {
                     </div>
                 </div>
                 <div>
-                    <h3 class="mb-0">€${price._ORDER_TOTAL}</h3>
-                    <h5 class="mb-0 text--modern">Totaal</h5>
+                    <h3 class="mb-0 text-right">€${price._ORDER_TOTAL}</h3>
+                    <h5 class="mb-0 text--modern text-right">Totaal</h5>
                 </div>
             </div>
             <hr>
