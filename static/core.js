@@ -18,12 +18,13 @@ node('[data-label="formInput"]').addEventListener("submit", (e) => {
     window.location.search = `email=${data.get('email')}`;
 })
 
-let orderIdNote = "";
+let orderIdNote = [];
 const renderOrders = (data) => {
     data.forEach((o, index) => {
         const price = calculatePrices({...o.order, method: o.method});
         const { toppings, drinks } = o.order
-        orderIdNote = `${orderIdNote}${o.orderNo}`
+        orderIdNote.push(o.orderNo);
+        
         const item = new Element('article');
         item.class(['card', 'order', 'animate__animated', 'animate__fadeInUp', 'animate__fast']);
         item.attributes([
@@ -178,9 +179,8 @@ getOrderData().then(data => {
     feather.replace();
     node('[data-label="total_price"]').innerHTML = `€${prices._TOTAL}`;
     node('[data-label="cart"]').classList.remove('d-none');
-    node('[data-label="infoText"]').classList.add('d-none');
     node('[data-label="cart-note"]').innerHTML = `overschrijven naar <span>BE05734047216575</span><br>
-    mededeling <span>spaghetti bestelling ${orderIdNote}</span>`
+    mededeling <span>spaghetti bestelling ${orderIdNote.join('-')}</span>`
     node('[data-label="userEmail"]').classList.remove('d-none');
 });
 
