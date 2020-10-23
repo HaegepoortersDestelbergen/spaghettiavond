@@ -47,6 +47,7 @@ export default async ({query: {email}}, res) => {
     Array.prototype.convertToObject = function () {
         const [timestamp, email, name, method, address, timeslot, ownBox, readyKids, readyAdult, portionSmall, portionBig, toppingCheese, toppingParmezan, toppingBacon, comment, wineWhite, wineRed, juiceOrange, juiceWorldmix, payed, orderNo] = this;
 
+
         return {
             timestamp: timestamp,
             orderNo: orderNo,
