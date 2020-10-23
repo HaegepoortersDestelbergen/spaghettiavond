@@ -101,7 +101,7 @@ body {
     right: 0px;
     bottom: 0px;
     color: white;
-    transform: translateY(50%);
+    transform: translateY(70%);
     
     &:hover {
         transform: translateY(0%);
@@ -130,5 +130,24 @@ body {
         width: fit-content;
         background-color: rgba(255, 255, 255, 0.164);
         border-radius: 12px;
+        color: #0260b1;
     }
 }
+
+.btn {
+    background: white;
+    border-radius: 120px;
+    white-space: nowrap;
+}
+
+@media (min-width: 576px) {
+    .cart {
+        transform: translateY(50%);
+    }
+}
+
+@media (min-width: 768px) {}
+
+@media (min-width: 992px) {}
+
+@media (min-width: 1200px) {}
