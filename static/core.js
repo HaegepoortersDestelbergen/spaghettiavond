@@ -92,7 +92,7 @@ const renderOrders = (data) => {
                         <h5 class="text--modern">Sappen (${prices.juice}€ / fles)</h5>
                         <p class="mb-0">
                             Sinaas <span class="text--var">${drinks.juiceOrange} flessen</span> &nbsp – &nbsp 
-                            Worldmix <span class="text--var">${drinks.juiceWorldmix} flessen</span>
+                            Worldshake <span class="text--var">${drinks.juiceWorldmix} flessen</span>
                         </p>
                     </div>
                 </div>
