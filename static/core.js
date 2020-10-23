@@ -74,7 +74,7 @@ const renderOrders = (data) => {
                 <div class="row">
                     <div class="col">
                         <h5 class="text--modern">Totaal</h5>
-                        <h3>€53</h3>
+                        <h3>€${berekenPrijs(o)}</h3>
                     </div>
                 </div>
             </div>
@@ -88,12 +88,42 @@ const renderOrders = (data) => {
     });
 }
 
+const prijs_wijnen = 6.5,
+    prijs_sap = 3.5,
+    prijs_topping = 1,
+    prijs_500g = 12,
+    prijs_1kg = 20,
+    prijs_kids = 8,
+    prijs_adult = 12,
+    prijs_leveren = 2.5
+
+
+let totaalPrijs = 0
+const berekenPrijs = (o) => {
+    let prijs = intToPrice(o.order.readyToEat.kids, prijs_kids) + 
+    intToPrice(o.order.readyToEat.adult, prijs_adult) +
+    intToPrice(o.order.sauce.small, prijs_500g) +
+    intToPrice(o.order.sauce.bigg, prijs_1kg) +
+    intToPrice(o.order.toppings.parmezan + o.order.toppings.bacon, prijs_topping) +
+    intToPrice(o.order.drinks.wineWhite + o.order.drinks.wineRed, prijs_wijnen) +
+    intToPrice(o.order.drinks.juiceOrange + o.order.drinks.juiceWorldmix, prijs_sap)
+    if(o.order.toppings.cheese == "Groot"){
+        prijs += prijs_topping
+    }
+    if(o.order.method == "Bezorging"){
+        prijs += prijs_leveren
+    }
+    totaalPrijs += prijs;
+    console.log(totaalPrijs + " " + prijs);
+    return prijs
+}
+
 const intToPrice = (int, price = 0) => {
     return int*price
 }
 
-const stringToPrice = (answer, priceObj) => {
-    return priceObj[answer]
+const berkenTotPrijs = () => {
+    
 }
 
 const methodPrice = {
@@ -108,7 +138,7 @@ getOrderData().then(data => {
     node('[data-label="orderList"]').innerHTML = '';
     renderOrders(data);
     feather.replace();
+    node('[data-label="total_price"]').innerHTML = `€${totaalPrijs}`;
 });
-
 
 node('[data-label="userEmail"]').innerHTML = email;
