@@ -96,6 +96,13 @@ const stringToPrice = (answer, priceObj) => {
     return priceObj[answer]
 }
 
+const methodPrice = {
+    'Ophalen': 0,
+    'bezorging': 2.5
+}
+
+console.log(stringToPrice('Ophalen', methodPrice));
+
 getOrderData().then(data => {
     console.log(data);
     node('[data-label="orderList"]').innerHTML = '';
