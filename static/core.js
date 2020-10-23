@@ -88,6 +88,14 @@ const renderOrders = (data) => {
     });
 }
 
+const intToPrice = (int, price = 0) => {
+    return int*price
+}
+
+const stringToPrice = (answer, priceObj) => {
+    return priceObj[answer]
+}
+
 getOrderData().then(data => {
     node('[data-label="orderList"]').innerHTML = '';
     renderOrders(data);
