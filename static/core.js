@@ -1,4 +1,8 @@
-import { node, Element, Api } from 'https://unpkg.com/cutleryjs/dist/js/index.js'
+import {
+    node,
+    Element,
+    Api
+} from 'https://unpkg.com/cutleryjs/dist/js/index.js'
 
 /**
  * TODO: if email defined, get by email, by method defined, get by method, ...
@@ -13,7 +17,10 @@ const getOrderData = async () => {
 
 const renderOrders = (data) => {
     data.forEach((o, index) => {
-        const { toppings, drinks } = o.order
+        const {
+            toppings,
+            drinks
+        } = o.order
         const item = new Element('article');
         item.class(['card', 'order', 'animate__animated', 'animate__fadeInUp', 'animate__fast']);
         item.attributes([
@@ -100,17 +107,17 @@ const prijs_wijnen = 6.5,
 
 let totaalPrijs = 0
 const berekenPrijs = (o) => {
-    let prijs = intToPrice(o.order.readyToEat.kids, prijs_kids) + 
-    intToPrice(o.order.readyToEat.adult, prijs_adult) +
-    intToPrice(o.order.sauce.small, prijs_500g) +
-    intToPrice(o.order.sauce.bigg, prijs_1kg) +
-    intToPrice(o.order.toppings.parmezan + o.order.toppings.bacon, prijs_topping) +
-    intToPrice(o.order.drinks.wineWhite + o.order.drinks.wineRed, prijs_wijnen) +
-    intToPrice(o.order.drinks.juiceOrange + o.order.drinks.juiceWorldmix, prijs_sap)
-    if(o.order.toppings.cheese == "Groot"){
+    let prijs = intToPrice(o.order.readyToEat.kids, prijs_kids) +
+        intToPrice(o.order.readyToEat.adult, prijs_adult) +
+        intToPrice(o.order.sauce.small, prijs_500g) +
+        intToPrice(o.order.sauce.bigg, prijs_1kg) +
+        intToPrice(o.order.toppings.parmezan + o.order.toppings.bacon, prijs_topping) +
+        intToPrice(o.order.drinks.wineWhite + o.order.drinks.wineRed, prijs_wijnen) +
+        intToPrice(o.order.drinks.juiceOrange + o.order.drinks.juiceWorldmix, prijs_sap)
+    if (o.order.toppings.cheese == "Groot") {
         prijs += prijs_topping
     }
-    if(o.order.method == "Bezorging"){
+    if (o.order.method == "Bezorging") {
         prijs += prijs_leveren
     }
     totaalPrijs += prijs;
@@ -119,11 +126,11 @@ const berekenPrijs = (o) => {
 }
 
 const intToPrice = (int, price = 0) => {
-    return int*price
+    return int * price
 }
 
 const berkenTotPrijs = () => {
-    
+
 }
 
 getOrderData().then(data => {
@@ -131,6 +138,7 @@ getOrderData().then(data => {
     node('[data-label="orderList"]').innerHTML = '';
     renderOrders(data);
     feather.replace();
+    node('[data-label="infoText"]').classList.add('d-none');
     node('[data-label="total_price"]').innerHTML = `€${totaalPrijs}`;
 });
 
