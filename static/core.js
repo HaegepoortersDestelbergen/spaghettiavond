@@ -114,33 +114,11 @@ const prijs_wijnen = 6.5,
     prijs_leveren = 2.5
 
 
-let totaalPrijs = 0
-const berekenPrijs = (o) => {
-    let prijs = intToPrice(o.order.readyToEat.kids, prijs_kids) +
-        intToPrice(o.order.readyToEat.adult, prijs_adult) +
-        intToPrice(o.order.sauce.small, prijs_500g) +
-        intToPrice(o.order.sauce.bigg, prijs_1kg) +
-        intToPrice(o.order.toppings.parmezan + o.order.toppings.bacon, prijs_topping) +
-        intToPrice(o.order.drinks.wineWhite + o.order.drinks.wineRed, prijs_wijnen) +
-        intToPrice(o.order.drinks.juiceOrange + o.order.drinks.juiceWorldmix, prijs_sap)
-    if (o.order.toppings.cheese == "Groot") {
-        prijs += prijs_topping
-    }
-    if (o.order.method == "Bezorging") {
-        prijs += prijs_leveren
-    }
-    totaalPrijs += prijs;
-    console.log(totaalPrijs + " " + prijs);
-    return prijs
-}
-
 const intToPrice = (int, price = 0) => {
     return int * price
 }
 
-const berkenTotPrijs = () => {
-
-}
+// console.log(stringToPrice('Ophalen', methodPrice));
 
 getOrderData().then(data => {
     console.log(data);
