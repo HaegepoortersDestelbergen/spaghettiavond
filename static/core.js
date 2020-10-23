@@ -15,8 +15,10 @@ const getOrderData = async () => {
     return await new Api(`${window.location.origin}/api${window.location.search}`).JSON();
 }
 
+let orderIdNote = ""
 const renderOrders = (data) => {
     data.forEach((o, index) => {
+        orderIdNote = `${orderIdNote}${o.orderNo}`
         const {
             toppings,
             drinks
@@ -138,8 +140,11 @@ getOrderData().then(data => {
     node('[data-label="orderList"]').innerHTML = '';
     renderOrders(data);
     feather.replace();
+    node('[data-label="cart"]').classList.remove('d-none');
     node('[data-label="infoText"]').classList.add('d-none');
     node('[data-label="total_price"]').innerHTML = `€${totaalPrijs}`;
+    node('[data-label="cart-note"]').innerHTML = `overschrijven naar <span>BE05734047216575</span><br>
+    mededeling <span>spaghetti bestelling ${orderIdNote}</span>`
 });
 
 node('[data-label="userEmail"]').innerHTML = email;
