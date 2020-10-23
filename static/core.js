@@ -18,7 +18,7 @@ node('[data-label="formInput"]').addEventListener("submit", (e) => {
     window.location.search = `email=${data.get('email')}`;
 })
 
-let orderIdNote = ""
+let orderIdNote = "";
 const renderOrders = (data) => {
     data.forEach((o, index) => {
         const price = calculatePrices({...o.order, method: o.method});
@@ -30,61 +30,70 @@ const renderOrders = (data) => {
             ['style', `animation-delay: ${index != 0 ? index/10 : 0}s`]
         ])
         item.inner(`
-            <div class="card__header d-flex">
-                <div class="order__no mr-3">
-                    ${o.orderNo}
+            <div class="card__header d-flex flex-row justify-content-between">
+                <div class="d-flex">
+                    <div class="order__no mr-3">
+                        ${o.orderNo}
+                    </div>
+                    <div>
+                        <h4 class="mb-0">Bestelling </h4>
+                        ${o.method == 'Ophalen' ? 
+                            `<small class="text--modern order__method">${o.method} van ${o.timeslot}</small>` :  
+                            `<small class="text--modern order__method"><i data-feather="truck" class="mr-2"></i> bezorging tussen 18u en 20u</small>`
+                        }
+                    </div>
                 </div>
                 <div>
-                    <h4 class="mb-0">Bestelling </h4>
-                    ${o.method == 'Ophalen' ? 
-                        `<small class="text--modern order__method">${o.method} van ${o.timeslot}</small>` :  
-                        `<small class="text--modern order__method"><i data-feather="truck" class="mr-2"></i> bezorging tussen 18u en 20u</small>`
-                    }
+                    <h3 class="mb-0">€${price._ORDER_TOTAL}</h3>
+                    <h5 class="mb-0 text--modern">Totaal</h5>
                 </div>
             </div>
             <hr>
             <div class="card__body mb-0">
                 <div class="row mb-3">
-                    <div class="col-12 col-md-6">
-                        <div class="mb-3">
-                            <h5 class="text--modern">Klaargemaakte porties</h5>
-                            <p class="mb-0">Kinder <span class="text--var">${o.order.readyToEat.kids} porties</span> &nbsp – &nbsp Volwassen <span class="text--var">${o.order.readyToEat.adult} porties</span></p>
-                        </div>
-                        <div class="mb-3">
-                            <h5 class="text--modern">Saus</h5>
-                            <p class="mb-0">0,5 kilo <span class="text--var">${o.order.sauce.small} pot${o.order.sauce.small == 1 ? '' : 'ten'}</span> &nbsp – &nbsp 1 kilo <span class="text--var">${o.order.sauce.bigg} pot${o.order.sauce.bigg == 1 ? '' : 'ten'}</span></p>
-                            <p class="mb-0"></p>
-                        </div>
-                        <div class="mb-3">
-                            <p class="mb-0">
-                            <h5 class="text--modern">Toppings</h5>
-                                Kaas <span class="text--var">${toppings.cheese} porties</span> &nbsp – &nbsp 
-                                Parmezaan <span class="text--var">${toppings.parmezan} porties</span> &nbsp – &nbsp 
-                                Spekjes <span class="text--var">${toppings.bacon} porties</span>
-                            </p>
-                        </div>
+                    <div class="col-12 col-md-6 mb-4 mb-md-0">
+                        <h5 class="mb-3">Met vlees</h5>
+                        <h5 class="text--modern">Klaargemaakte porties (${prices.portions.kids}€ — ${prices.portions.adult}€ / portie)</h5>
+                        <p class="mb-3">Kinder <span class="text--var">${o.order.readyToEat.kids} porties</span> &nbsp – &nbsp Volwassen <span class="text--var">${o.order.readyToEat.adult} porties</span></p>
+                        
+                        <h5 class="text--modern">Saus (${prices.sauce.small}€ — ${prices.sauce.bigg}€ / pot)</h5>
+                        <p class="mb-0">0,5 kilo <span class="text--var">${o.order.sauce.small} pot${o.order.sauce.small == 1 ? '' : 'ten'}</span> &nbsp – &nbsp 1 kilo <span class="text--var">${o.order.sauce.bigg} pot${o.order.sauce.bigg == 1 ? '' : 'ten'}</span></p>
                     </div>
                     <div class="col-12 col-md-6">
-                        <div class="mb-0">
-                            <p class="mb-0">
-                            <h5 class="text--modern">Wijn</h5>
-                                Wit <span class="text--var">${drinks.wineWhite} flessen</span> &nbsp – &nbsp 
-                                Rood <span class="text--var">${drinks.wineRed} flessen</span>
-                            </p>
-                        </div>
-                        <div class="mb-0">
-                            <p class="mb-0">
-                            <h5 class="text--modern">Sappen</h5>
-                                Sinaas <span class="text--var">${drinks.juiceOrange} flessen</span> &nbsp – &nbsp 
-                                Worldmix <span class="text--var">${drinks.juiceWorldmix} flessen</span>
-                            </p>
-                        </div>
+                        <h5 class="mb-3">Vegitarisch</h5>
+                        <h5 class="text--modern">Klaargemaakte porties (${prices.portions.kids}€ — ${prices.portions.adult}€ / portie)</h5>
+                        <p class="mb-3">Kinder <span class="text--var">${o.order.readyToEatVegi.kids} porties</span> &nbsp – &nbsp Volwassen <span class="text--var">${o.order.readyToEatVegi.adult} porties</span></p>
+                        
+                        <h5 class="text--modern">Saus (${prices.sauce.small}€ — ${prices.sauce.bigg}€ / pot)</h5>
+                        <p class="mb-0">0,5 kilo <span class="text--var">${o.order.sauceVegi.small} pot${o.order.sauceVegi.small == 1 ? '' : 'ten'}</span> &nbsp – &nbsp 1 kilo <span class="text--var">${o.order.sauceVegi.bigg} pot${o.order.sauceVegi.bigg == 1 ? '' : 'ten'}</span></p>
                     </div>
                 </div>
+                <hr>
                 <div class="row">
-                    <div class="col">
-                        <h5 class="text--modern">Totaal</h5>
-                        <h3>€${price._ORDER_TOTAL}</h3>
+                    <div class="col-12 col-md-6">
+                        <h5 class="text--modern">Toppings (${prices.topping}€ / topping)</h5>
+                        <p class="mb-0">
+                            Kaas <span class="text--var">${toppings.cheese} porties</span> &nbsp – &nbsp 
+                            Parmezaan <span class="text--var">${toppings.parmezan} porties</span> &nbsp – &nbsp 
+                            Spekjes <span class="text--var">${toppings.bacon} porties</span>
+                        </p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-12 col-md-6 mb-3 mb-md-0">
+                        <h5 class="text--modern">Wijn (${prices.wine}€ / fles)</h5>
+                        <p class="mb-0">
+                            Wit <span class="text--var">${drinks.wineWhite} flessen</span> &nbsp – &nbsp 
+                            Rood <span class="text--var">${drinks.wineRed} flessen</span>
+                        </p>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <h5 class="text--modern">Sappen (${prices.juice}€ / fles)</h5>
+                        <p class="mb-0">
+                            Sinaas <span class="text--var">${drinks.juiceOrange} flessen</span> &nbsp – &nbsp 
+                            Worldmix <span class="text--var">${drinks.juiceWorldmix} flessen</span>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -125,28 +134,36 @@ const prices = {
         small: 12,
         bigg: 20
     },
-    juice: 3.5,
-    wine: 6.5
+    juice: 4,
+    wine: 7
 }
 
-const calculatePrices = ({readyToEat, sauce, toppings, method, drinks: {wineWhite, wineRed, juiceOrange, juiceWorldmix}}) => {
+const calculatePrices = ({readyToEat, readyToEatVegi, sauce, sauceVegi, toppings, method, drinks: {wineWhite, wineRed, juiceOrange, juiceWorldmix}}) => {
     prices._ORDER_TOTAL = 0;
   
     const p = {
+        method: stringToPrice(method, prices.method),
+        portions: {
+            kids: intToPrice(readyToEat.kids, prices.portions.kids),
+            adult: intToPrice(readyToEat.adult, prices.portions.adult)
+        },
+        portionsVegi: {
+            kids: intToPrice(readyToEatVegi.kids, prices.portions.kids),
+            adult: intToPrice(readyToEatVegi.adult, prices.portions.adult)
+        },
+        sauce: {
+            small: intToPrice(sauce.small, prices.sauce.small),
+            bigg: intToPrice(sauce.bigg, prices.sauce.bigg)
+        },
+        sauceVegi: {
+            small: intToPrice(sauceVegi.small, prices.sauce.small),
+            bigg: intToPrice(sauceVegi.bigg, prices.sauce.bigg)
+        },
         toppings: {
             cheese: intToPrice(toppings.cheese, prices.topping),
             parmezan: intToPrice(toppings.parmezan, prices.topping),
             bacon: intToPrice(toppings.bacon, prices.topping)
         }, 
-        portions: {
-            kids: intToPrice(readyToEat.kids, prices.portions.kids),
-            adult: intToPrice(readyToEat.adult, prices.portions.adult)
-        },
-        method: stringToPrice(method, prices.method),
-        sauce: {
-            small: intToPrice(sauce.small, prices.sauce.small),
-            bigg: intToPrice(sauce.bigg, prices.sauce.bigg)
-        },
         juice: intToPrice(juiceOrange, prices.juice) + intToPrice(juiceWorldmix, prices.juice),
         wine: intToPrice(wineWhite, prices.wine) + intToPrice(wineRed, prices.wine),
         _ORDER_TOTAL: prices._ORDER_TOTAL
