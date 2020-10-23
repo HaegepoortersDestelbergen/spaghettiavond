@@ -47,9 +47,9 @@ const renderOrders = (data) => {
                         <div class="mb-3">
                             <p class="mb-0">
                             <h5 class="text--modern">Toppings</h5>
-                                Kaas <span class="text--var">${toppings.cheese}</span> &nbsp – &nbsp 
-                                Parmezaan <span class="text--var">${toppings.parmezan}</span> &nbsp – &nbsp 
-                                Spekjes <span class="text--var">${toppings.bacon}</span>
+                                Kaas <span class="text--var">${toppings.cheese} porties</span> &nbsp – &nbsp 
+                                Parmezaan <span class="text--var">${toppings.parmezan} porties</span> &nbsp – &nbsp 
+                                Spekjes <span class="text--var">${toppings.bacon} porties</span>
                             </p>
                         </div>
                     </div>
