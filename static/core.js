@@ -1,9 +1,5 @@
 import { node, Element, Api } from 'https://unpkg.com/cutleryjs/dist/js/index.js'
 
-/**
- * TODO: if email defined, get by email, by method defined, get by method, ...
- */
-
 const url = new URL(window.location.href);
 const email = url.searchParams.get('email') || 'Geen emailadres opgegeven';
 
@@ -13,6 +9,9 @@ const getOrderData = async () => {
 
 const renderOrders = (data) => {
     data.forEach((o, index) => {
+        console.log(o)
+        const price = calculatePrices({...o.order, method: o.method});
+        
         const { toppings, drinks } = o.order
         const item = new Element('article');
         item.class(['card', 'order', 'animate__animated', 'animate__fadeInUp', 'animate__fast']);
@@ -74,7 +73,7 @@ const renderOrders = (data) => {
                 <div class="row">
                     <div class="col">
                         <h5 class="text--modern">Totaal</h5>
-                        <h3>€${berekenPrijs(o)}</h3>
+                        <h3>€${price._ORDER_TOTAL}</h3>
                     </div>
                 </div>
             </div>
@@ -88,51 +87,70 @@ const renderOrders = (data) => {
     });
 }
 
-const prijs_wijnen = 6.5,
-    prijs_sap = 3.5,
-    prijs_topping = 1,
-    prijs_500g = 12,
-    prijs_1kg = 20,
-    prijs_kids = 8,
-    prijs_adult = 12,
-    prijs_leveren = 2.5
-
-
-let totaalPrijs = 0
-const berekenPrijs = (o) => {
-    const {readyToEat, sauce, toppings, drinks, method} = o.order;
-    
-    let prijs = intToPrice(o.order.readyToEat.kids, prijs_kids) + 
-    intToPrice(readyToEat.adult, prijs_adult) +
-    intToPrice(sauce.small, prijs_500g) +
-    intToPrice(sauce.bigg, prijs_1kg) +
-    intToPrice(toppings.parmezan + toppings.bacon, prijs_topping) +
-    intToPrice(drinks.wineWhite + drinks.wineRed, prijs_wijnen) +
-    intToPrice(drinks.juiceOrange + drinks.juiceWorldmix, prijs_sap)
-    
-    if(toppings.cheese == "Groot")prijs += prijs_topping;
-    if(method == "Bezorging")prijs += prijs_leveren;
-    totaalPrijs += prijs;
-    return prijs
-}
-
 const intToPrice = (int, price = 0) => {
-    return int*price
+    const c = int*price
+    prices._TOTAL += c;
+    prices._ORDER_TOTAL += c;
+    return c;
 }
 
-const methodPrice = {
-    'Ophalen': 0,
-    'bezorging': 2.5
+const stringToPrice = (str, priceObj) => {
+    return priceObj[str];
 }
 
-// console.log(stringToPrice('Ophalen', methodPrice));
+const prices = {
+    _TOTAL: 0,
+    _ORDER_TOTAL: 0,
+    topping: 1, 
+    portions: {
+        kids: 8,
+        adult: 10
+    },
+    method: {
+        'Ophalen': 0,
+        'Bezorging': 2.5
+    },
+    sauce: {
+        small: 12,
+        bigg: 20
+    },
+    juice: 3.5,
+    wine: 6.5
+}
+
+const calculatePrices = ({readyToEat, sauce, toppings, method, drinks: {wineWhite, wineRed, juiceOrange, juiceWorldmix}}) => {
+    prices._ORDER_TOTAL = 0;
+    
+    console.log(toppings)
+    
+    const p = {
+        toppings: {
+            cheese: intToPrice(toppings.cheese, prices.topping),
+            parmezan: intToPrice(toppings.parmezan, prices.topping),
+            bacon: intToPrice(toppings.bacon, prices.topping)
+        }, 
+        portions: {
+            kids: intToPrice(readyToEat.kids, prices.portions.kids),
+            adult: intToPrice(readyToEat.adult, prices.portions.adult)
+        },
+        method: stringToPrice(method, prices.method),
+        sauce: {
+            small: intToPrice(sauce.small, prices.sauce.small),
+            bigg: intToPrice(sauce.bigg, prices.sauce.bigg)
+        },
+        juice: intToPrice(juiceOrange, prices.juice) + intToPrice(juiceWorldmix, prices.juice),
+        wine: intToPrice(wineWhite, prices.wine) + intToPrice(wineRed, prices.wine),
+        _ORDER_TOTAL: prices._ORDER_TOTAL
+    }
+    console.log(p)
+    return p;
+}
 
 getOrderData().then(data => {
-    console.log(data);
     node('[data-label="orderList"]').innerHTML = '';
     renderOrders(data);
     feather.replace();
-    node('[data-label="total_price"]').innerHTML = `€${totaalPrijs}`;
+    node('[data-label="total_price"]').innerHTML = `€${prices._TOTAL}`;
 });
 
 node('[data-label="userEmail"]').innerHTML = email;
