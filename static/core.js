@@ -1,4 +1,9 @@
-import { node, Element, Api } from 'https://unpkg.com/cutleryjs/dist/js/index.js'
+import {
+    node,
+    Element,
+    Api,
+    getFormData
+} from 'https://unpkg.com/cutleryjs/dist/js/index.js'
 
 const url = new URL(window.location.href);
 const email = url.searchParams.get('email') || 'Geen emailadres opgegeven';
@@ -7,12 +12,18 @@ const getOrderData = async () => {
     return await new Api(`${window.location.origin}/api${window.location.search}`).JSON();
 }
 
+node('[data-label="formInput"]').addEventListener("submit", (e) => {
+    e.preventDefault()
+    const data = getFormData(e.target);
+    window.location.search = `email=${data.get('email')}`;
+})
+
+let orderIdNote = ""
 const renderOrders = (data) => {
     data.forEach((o, index) => {
-        console.log(o)
         const price = calculatePrices({...o.order, method: o.method});
-        
         const { toppings, drinks } = o.order
+        orderIdNote = `${orderIdNote}${o.orderNo}`
         const item = new Element('article');
         item.class(['card', 'order', 'animate__animated', 'animate__fadeInUp', 'animate__fast']);
         item.attributes([
@@ -120,9 +131,7 @@ const prices = {
 
 const calculatePrices = ({readyToEat, sauce, toppings, method, drinks: {wineWhite, wineRed, juiceOrange, juiceWorldmix}}) => {
     prices._ORDER_TOTAL = 0;
-    
-    console.log(toppings)
-    
+  
     const p = {
         toppings: {
             cheese: intToPrice(toppings.cheese, prices.topping),
@@ -151,6 +160,11 @@ getOrderData().then(data => {
     renderOrders(data);
     feather.replace();
     node('[data-label="total_price"]').innerHTML = `€${prices._TOTAL}`;
+    node('[data-label="cart"]').classList.remove('d-none');
+    node('[data-label="infoText"]').classList.add('d-none');
+    node('[data-label="cart-note"]').innerHTML = `overschrijven naar <span>BE05734047216575</span><br>
+    mededeling <span>spaghetti bestelling ${orderIdNote}</span>`
+    node('[data-label="userEmail"]').classList.remove('d-none');
 });
 
 node('[data-label="userEmail"]').innerHTML = email;
