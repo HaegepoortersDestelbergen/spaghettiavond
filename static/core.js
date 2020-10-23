@@ -1,4 +1,9 @@
-import { node, Element, Api } from 'https://unpkg.com/cutleryjs/dist/js/index.js'
+import {
+    node,
+    Element,
+    Api,
+    getFormData
+} from 'https://unpkg.com/cutleryjs/dist/js/index.js'
 
 /**
  * TODO: if email defined, get by email, by method defined, get by method, ...
@@ -11,9 +16,20 @@ const getOrderData = async () => {
     return await new Api(`${window.location.origin}/api${window.location.search}`).JSON();
 }
 
+node('[data-label="formInput"]').addEventListener("submit", (e) => {
+    e.preventDefault()
+    const data = getFormData(e.target);
+    window.location.search = `email=${data.get('email')}`;
+})
+
+let orderIdNote = ""
 const renderOrders = (data) => {
     data.forEach((o, index) => {
-        const { toppings, drinks } = o.order
+        orderIdNote = `${orderIdNote}${o.orderNo}`
+        const {
+            toppings,
+            drinks
+        } = o.order
         const item = new Element('article');
         item.class(['card', 'order', 'animate__animated', 'animate__fadeInUp', 'animate__fast']);
         item.attributes([
@@ -98,31 +114,8 @@ const prijs_wijnen = 6.5,
     prijs_leveren = 2.5
 
 
-let totaalPrijs = 0
-const berekenPrijs = (o) => {
-    const {readyToEat, sauce, toppings, drinks, method} = o.order;
-    
-    let prijs = intToPrice(o.order.readyToEat.kids, prijs_kids) + 
-    intToPrice(readyToEat.adult, prijs_adult) +
-    intToPrice(sauce.small, prijs_500g) +
-    intToPrice(sauce.bigg, prijs_1kg) +
-    intToPrice(toppings.parmezan + toppings.bacon, prijs_topping) +
-    intToPrice(drinks.wineWhite + drinks.wineRed, prijs_wijnen) +
-    intToPrice(drinks.juiceOrange + drinks.juiceWorldmix, prijs_sap)
-    
-    if(toppings.cheese == "Groot")prijs += prijs_topping;
-    if(method == "Bezorging")prijs += prijs_leveren;
-    totaalPrijs += prijs;
-    return prijs
-}
-
 const intToPrice = (int, price = 0) => {
-    return int*price
-}
-
-const methodPrice = {
-    'Ophalen': 0,
-    'bezorging': 2.5
+    return int * price
 }
 
 // console.log(stringToPrice('Ophalen', methodPrice));
@@ -132,7 +125,12 @@ getOrderData().then(data => {
     node('[data-label="orderList"]').innerHTML = '';
     renderOrders(data);
     feather.replace();
+    node('[data-label="cart"]').classList.remove('d-none');
+    node('[data-label="infoText"]').classList.add('d-none');
     node('[data-label="total_price"]').innerHTML = `€${totaalPrijs}`;
+    node('[data-label="cart-note"]').innerHTML = `overschrijven naar <span>BE05734047216575</span><br>
+    mededeling <span>spaghetti bestelling ${orderIdNote}</span>`
+    node('[data-label="userEmail"]').classList.remove('d-none');
 });
 
 node('[data-label="userEmail"]').innerHTML = email;

@@ -1,15 +1,17 @@
-* {transition: all .3s ease;}
+* {
+    transition: all .3s ease;
+}
 
 body {
     /* font-family: sofia-pro, sans-serif;
     font-weight: 400;
     font-style: normal; */
-    
+
     /* font-family: basic-sans, sans-serif;
     font-weight: 400;
     font-style: normal; */
-    
-    font-family: parisplus-std,sans-serif;
+
+    font-family: parisplus-std, sans-serif;
     font-weight: 400;
     font-style: normal;
 }
@@ -22,16 +24,16 @@ body {
     width: 100%;
     border: none;
     margin-bottom: 2rem;
-    
+
     // * {
     //     color: #457aa8;
     // }
-    
+
     hr {
         margin: 1.8rem 0rem;
         color: rgb(186, 196, 206);
     }
-    
+
     &__body {
         color: #797979;
     }
@@ -53,27 +55,27 @@ body {
         font-size: 1.2rem;
         border-radius: 16px;
     }
-    
+
     &__method {
         display: flex;
         align-items: center;
-        
+
         .feather {
             --size: 10px;
             width: 15px;
             height: 15px;
         }
     }
-    
+
     &__pay-status {
         padding: 0.2rem .4rem;
         border-radius: 8px;
-        
+
         &[data-status="true"] {
             background-color: #73ca5d6b;
             color: green;
         }
-        
+
         &[data-status="false"] {
             background-color: #b5b5b530;
             color: grey;
@@ -102,30 +104,32 @@ body {
     bottom: 0px;
     color: white;
     transform: translateY(70%);
-    
+
     &:hover {
         transform: translateY(0%);
     }
-    
+
     &__wrapper {
         // margin: 0 3rem;
         padding: 1.4rem 1.4rem 1.2rem 1.4rem;
         // background-color: #0260b1;
-        background: linear-gradient(90deg, rgb(46, 136, 214) 0%, rgba(2,96,177,1) 100%);
+        background: linear-gradient(90deg, rgb(46, 136, 214) 0%, rgba(2, 96, 177, 1) 100%);
         border-radius: 1rem 1rem 0rem 0rem;
-        
+
         h3.text--modern {
             font-size: 1.6rem;
             color: inherit;
         }
     }
-    
+
     &__account-note {
         color: rgba(255, 255, 255, 0.651);
-        
-        span {color: white;}
+
+        span {
+            color: white;
+        }
     }
-    
+
     &__total {
         padding: .4rem .8rem .6rem .8rem;
         width: fit-content;
