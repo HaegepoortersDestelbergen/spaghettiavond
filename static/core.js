@@ -5,10 +5,6 @@ import {
     getFormData
 } from 'https://unpkg.com/cutleryjs/dist/js/index.js'
 
-/**
- * TODO: if email defined, get by email, by method defined, get by method, ...
- */
-
 const url = new URL(window.location.href);
 const email = url.searchParams.get('email') || 'Geen emailadres opgegeven';
 
@@ -25,11 +21,9 @@ node('[data-label="formInput"]').addEventListener("submit", (e) => {
 let orderIdNote = ""
 const renderOrders = (data) => {
     data.forEach((o, index) => {
+        const price = calculatePrices({...o.order, method: o.method});
+        const { toppings, drinks } = o.order
         orderIdNote = `${orderIdNote}${o.orderNo}`
-        const {
-            toppings,
-            drinks
-        } = o.order
         const item = new Element('article');
         item.class(['card', 'order', 'animate__animated', 'animate__fadeInUp', 'animate__fast']);
         item.attributes([
@@ -64,9 +58,9 @@ const renderOrders = (data) => {
                         <div class="mb-3">
                             <p class="mb-0">
                             <h5 class="text--modern">Toppings</h5>
-                                Kaas <span class="text--var">${toppings.cheese}</span> &nbsp – &nbsp 
-                                Parmezaan <span class="text--var">${toppings.parmezan}</span> &nbsp – &nbsp 
-                                Spekjes <span class="text--var">${toppings.bacon}</span>
+                                Kaas <span class="text--var">${toppings.cheese} porties</span> &nbsp – &nbsp 
+                                Parmezaan <span class="text--var">${toppings.parmezan} porties</span> &nbsp – &nbsp 
+                                Spekjes <span class="text--var">${toppings.bacon} porties</span>
                             </p>
                         </div>
                     </div>
@@ -90,7 +84,7 @@ const renderOrders = (data) => {
                 <div class="row">
                     <div class="col">
                         <h5 class="text--modern">Totaal</h5>
-                        <h3>€${berekenPrijs(o)}</h3>
+                        <h3>€${price._ORDER_TOTAL}</h3>
                     </div>
                 </div>
             </div>
@@ -104,30 +98,70 @@ const renderOrders = (data) => {
     });
 }
 
-const prijs_wijnen = 6.5,
-    prijs_sap = 3.5,
-    prijs_topping = 1,
-    prijs_500g = 12,
-    prijs_1kg = 20,
-    prijs_kids = 8,
-    prijs_adult = 12,
-    prijs_leveren = 2.5
-
-
 const intToPrice = (int, price = 0) => {
-    return int * price
+    const c = int*price
+    prices._TOTAL += c;
+    prices._ORDER_TOTAL += c;
+    return c;
 }
 
-// console.log(stringToPrice('Ophalen', methodPrice));
+const stringToPrice = (str, priceObj) => {
+    return priceObj[str];
+}
+
+const prices = {
+    _TOTAL: 0,
+    _ORDER_TOTAL: 0,
+    topping: 1, 
+    portions: {
+        kids: 8,
+        adult: 10
+    },
+    method: {
+        'Ophalen': 0,
+        'Bezorging': 2.5
+    },
+    sauce: {
+        small: 12,
+        bigg: 20
+    },
+    juice: 3.5,
+    wine: 6.5
+}
+
+const calculatePrices = ({readyToEat, sauce, toppings, method, drinks: {wineWhite, wineRed, juiceOrange, juiceWorldmix}}) => {
+    prices._ORDER_TOTAL = 0;
+  
+    const p = {
+        toppings: {
+            cheese: intToPrice(toppings.cheese, prices.topping),
+            parmezan: intToPrice(toppings.parmezan, prices.topping),
+            bacon: intToPrice(toppings.bacon, prices.topping)
+        }, 
+        portions: {
+            kids: intToPrice(readyToEat.kids, prices.portions.kids),
+            adult: intToPrice(readyToEat.adult, prices.portions.adult)
+        },
+        method: stringToPrice(method, prices.method),
+        sauce: {
+            small: intToPrice(sauce.small, prices.sauce.small),
+            bigg: intToPrice(sauce.bigg, prices.sauce.bigg)
+        },
+        juice: intToPrice(juiceOrange, prices.juice) + intToPrice(juiceWorldmix, prices.juice),
+        wine: intToPrice(wineWhite, prices.wine) + intToPrice(wineRed, prices.wine),
+        _ORDER_TOTAL: prices._ORDER_TOTAL
+    }
+    console.log(p)
+    return p;
+}
 
 getOrderData().then(data => {
-    console.log(data);
     node('[data-label="orderList"]').innerHTML = '';
     renderOrders(data);
     feather.replace();
+    node('[data-label="total_price"]').innerHTML = `€${prices._TOTAL}`;
     node('[data-label="cart"]').classList.remove('d-none');
     node('[data-label="infoText"]').classList.add('d-none');
-    node('[data-label="total_price"]').innerHTML = `€${totaalPrijs}`;
     node('[data-label="cart-note"]').innerHTML = `overschrijven naar <span>BE05734047216575</span><br>
     mededeling <span>spaghetti bestelling ${orderIdNote}</span>`
     node('[data-label="userEmail"]').classList.remove('d-none');

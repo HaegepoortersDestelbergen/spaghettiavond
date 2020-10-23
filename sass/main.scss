@@ -18,7 +18,7 @@ body {
 
 .card {
     background: white;
-    box-shadow: 0px 6px 20px aliceblue;
+    box-shadow: 0px 6px 20px #e9f4fd;
     border-radius: 14px;
     padding: 2rem 2rem 1.4rem 2rem;
     width: 100%;
@@ -135,6 +135,8 @@ body {
         width: fit-content;
         background-color: rgba(255, 255, 255, 0.164);
         border-radius: 12px;
+        font-family: parisplus-std,sans-serif;
+        font-weight: 500;
         color: #0260b1;
     }
 }

@@ -76,9 +76,9 @@ export default async ({query}, res) => {
                     bigg: parseFloat(portionBig),
                 },
                 toppings: {
-                    cheese: toppingCheese,
-                    parmezan: toppingParmezan == 'Ja' ? 1 : 0,
-                    bacon: toppingBacon == 'Ja' ? 1 : 0
+                    cheese: parseFloat(toppingCheese),
+                    parmezan: parseFloat(toppingParmezan),
+                    bacon: parseFloat(toppingBacon)
                 },
                 drinks: {
                     wineWhite: parseFloat(wineWhite),
