@@ -1,7 +1,8 @@
 import {
     node,
     Element,
-    Api
+    Api,
+    getFormData
 } from 'https://unpkg.com/cutleryjs/dist/js/index.js'
 
 /**
@@ -14,6 +15,12 @@ const email = url.searchParams.get('email') || 'Geen emailadres opgegeven';
 const getOrderData = async () => {
     return await new Api(`${window.location.origin}/api${window.location.search}`).JSON();
 }
+
+node('[data-label="formInput"]').addEventListener("submit", (e) => {
+    e.preventDefault()
+    const data = getFormData(e.target);
+    window.location.search = `email=${data.get('email')}`;
+})
 
 let orderIdNote = ""
 const renderOrders = (data) => {
@@ -145,6 +152,7 @@ getOrderData().then(data => {
     node('[data-label="total_price"]').innerHTML = `€${totaalPrijs}`;
     node('[data-label="cart-note"]').innerHTML = `overschrijven naar <span>BE05734047216575</span><br>
     mededeling <span>spaghetti bestelling ${orderIdNote}</span>`
+    node('[data-label="userEmail"]').classList.remove('d-none');
 });
 
 node('[data-label="userEmail"]').innerHTML = email;

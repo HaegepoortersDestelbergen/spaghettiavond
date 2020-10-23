@@ -29,7 +29,13 @@
             <h1 class="text-center font-weight-bold">Je bestelling(en)</h1>
             <h5 class="text-center" data-label="infoText">Wanneer het langer dan 1min duurt voor het laden, kom binnen
                 5min terug!</h5>
-            <h4 class="text-center" data-label="userEmail"></h4>
+            <h4 class="text-center d-none" data-label="userEmail"></h4>
+            <div class="d-flex justify-content-center">
+                <form method="GET" class="w-50" data-label="formInput">
+                    <input name="email" type="email" class="form-control text-center" id="exampleInputEmail1"
+                        aria-describedby="emailHelp" placeholder="bv. lekkerspaghetti@haegepoorters.be">
+                </form>
+            </div>
         </header>
         <main>
             <div data-label="orderList" class="d-flex flex-column align-items-center">
