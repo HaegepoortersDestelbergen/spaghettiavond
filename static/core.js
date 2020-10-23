@@ -100,22 +100,19 @@ const prijs_wijnen = 6.5,
 
 let totaalPrijs = 0
 const berekenPrijs = (o) => {
-    const {readyToEat, sauce, toppings, drinks} = o.order;
+    const {readyToEat, sauce, toppings, drinks, method} = o.order;
+    
     let prijs = intToPrice(o.order.readyToEat.kids, prijs_kids) + 
-    intToPrice(o.order.readyToEat.adult, prijs_adult) +
-    intToPrice(o.order.sauce.small, prijs_500g) +
-    intToPrice(o.order.sauce.bigg, prijs_1kg) +
-    intToPrice(o.order.toppings.parmezan + o.order.toppings.bacon, prijs_topping) +
-    intToPrice(o.order.drinks.wineWhite + o.order.drinks.wineRed, prijs_wijnen) +
-    intToPrice(o.order.drinks.juiceOrange + o.order.drinks.juiceWorldmix, prijs_sap)
-    if(o.order.toppings.cheese == "Groot"){
-        prijs += prijs_topping
-    }
-    if(o.order.method == "Bezorging"){
-        prijs += prijs_leveren
-    }
+    intToPrice(readyToEat.adult, prijs_adult) +
+    intToPrice(sauce.small, prijs_500g) +
+    intToPrice(sauce.bigg, prijs_1kg) +
+    intToPrice(toppings.parmezan + toppings.bacon, prijs_topping) +
+    intToPrice(drinks.wineWhite + drinks.wineRed, prijs_wijnen) +
+    intToPrice(drinks.juiceOrange + drinks.juiceWorldmix, prijs_sap)
+    
+    if(toppings.cheese == "Groot")prijs += prijs_topping;
+    if(method == "Bezorging")prijs += prijs_leveren;
     totaalPrijs += prijs;
-    console.log(totaalPrijs + " " + prijs);
     return prijs
 }
 
@@ -123,16 +120,12 @@ const intToPrice = (int, price = 0) => {
     return int*price
 }
 
-const berkenTotPrijs = () => {
-    
-}
-
 const methodPrice = {
     'Ophalen': 0,
     'bezorging': 2.5
 }
 
-console.log(stringToPrice('Ophalen', methodPrice));
+// console.log(stringToPrice('Ophalen', methodPrice));
 
 getOrderData().then(data => {
     console.log(data);
