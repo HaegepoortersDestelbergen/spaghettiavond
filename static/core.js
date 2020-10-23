@@ -20,7 +20,7 @@ const renderOrders = (data) => {
             ['style', `animation-delay: ${index != 0 ? index/10 : 0}s`]
         ])
         item.inner(`
-            <div class="card__header mb-4 d-flex">
+            <div class="card__header d-flex">
                 <div class="order__no mr-3">
                     ${o.orderNo}
                 </div>
@@ -32,6 +32,7 @@ const renderOrders = (data) => {
                     }
                 </div>
             </div>
+            <hr>
             <div class="card__body mb-0">
                 <div class="row mb-3">
                     <div class="col-6">

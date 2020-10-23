@@ -23,9 +23,10 @@ export default async ({query: {email}}, res) => {
                 })
                 .fromString(data)
                 .then((csvRow)=>{
+                    console.log(csvRow[0]);
                     const orders = csvRow.slice(0, csvRow.length);
                     orders.map((order, index) => {order.push(index+1)})
-                    resolve(orders)
+                    resolve(orders);
                 })
             })
             .catch(err => {
@@ -44,7 +45,8 @@ export default async ({query: {email}}, res) => {
     }
     
     Array.prototype.convertToObject = function () {
-        const [timestamp, email, name, method, address, timeslot, ownBox, readyKids, readyAdult, portionSmall, portionBig, toppingCheese, toppingParmezan, toppingBacon, comment, payed, orderNo] = this;
+        const [timestamp, email, name, method, address, timeslot, ownBox, readyKids, readyAdult, portionSmall, portionBig, toppingCheese, toppingParmezan, toppingBacon, comment, wineWhite, wineRed, juiceOrange, juiceWorldmix, payed, orderNo] = this;
+
         return {
             timestamp: timestamp,
             orderNo: orderNo,
@@ -67,6 +69,12 @@ export default async ({query: {email}}, res) => {
                     cheese: toppingCheese,
                     parmezan: toppingParmezan,
                     bacon: toppingBacon
+                },
+                drinks: {
+                    wineWhite: parseFloat(wineWhite),
+                    wineRed: parseFloat(wineRed),
+                    juiceOrange: parseFloat(juiceOrange),
+                    juiceWorldmix: parseFloat(juiceWorldmix)
                 }
             },
             comment: comment,

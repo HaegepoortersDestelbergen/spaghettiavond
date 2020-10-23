@@ -18,7 +18,8 @@ body {
   border: none;
   margin-bottom: 2rem; }
   .card hr {
-    color: aliceblue; }
+    margin: 1.8rem 0rem;
+    color: #bac4ce; }
   .card__body {
     color: #797979; }
 
