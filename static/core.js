@@ -7,7 +7,7 @@ import { node, Element, Api } from 'https://unpkg.com/cutleryjs/dist/js/index.js
 const url = new URL(window.location.href);
 const email = url.searchParams.get('email') || 'Geen emailadres opgegeven';
 
-const getOrderData = async (userEmail = email) => {
+const getOrderData = async () => {
     return await new Api(`${window.location.origin}/api${window.location.search}`).JSON();
 }
 
