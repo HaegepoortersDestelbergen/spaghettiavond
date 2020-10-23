@@ -13,7 +13,7 @@ const getOrderData = async (userEmail = email) => {
 
 const renderOrders = (data) => {
     data.forEach((o, index) => {
-        const { toppings } = o.order
+        const { toppings, drinks } = o.order
         const item = new Element('article');
         item.class(['card', 'order', 'animate__animated', 'animate__fadeInUp', 'animate__fast']);
         item.attributes([
@@ -35,7 +35,7 @@ const renderOrders = (data) => {
             <hr>
             <div class="card__body mb-0">
                 <div class="row mb-3">
-                    <div class="col-6">
+                    <div class="col-12 col-md-6">
                         <div class="mb-3">
                             <h5 class="text--modern">Klaargemaakte porties</h5>
                             <p class="mb-0">Kinder <span class="text--var">${o.order.readyToEat.kids} porties</span> &nbsp – &nbsp Volwassen <span class="text--var">${o.order.readyToEat.adult} porties</span></p>
@@ -45,12 +45,30 @@ const renderOrders = (data) => {
                             <p class="mb-0">0,5 kilo <span class="text--var">${o.order.sauce.small} pot${o.order.sauce.small == 1 ? '' : 'ten'}</span> &nbsp – &nbsp 1 kilo <span class="text--var">${o.order.sauce.bigg} pot${o.order.sauce.bigg == 1 ? '' : 'ten'}</span></p>
                             <p class="mb-0"></p>
                         </div>
+                        <div class="mb-3">
+                            <p class="mb-0">
+                            <h5 class="text--modern">Toppings</h5>
+                                Kaas <span class="text--var">${toppings.cheese}</span> &nbsp – &nbsp 
+                                Parmezaan <span class="text--var">${toppings.parmezan}</span> &nbsp – &nbsp 
+                                Spekjes <span class="text--var">${toppings.bacon}</span>
+                            </p>
+                        </div>
                     </div>
-                    <div class="col-6">
-                        <h5 class="text--modern">Toppings</h5>
-                        <p class="mb-0">Kaas <span class="text--var">${toppings.cheese}</span></p>
-                        <p class="mb-0">Parmezaan <span class="text--var">${toppings.parmezan}</span></p>
-                        <p class="mb-0">Spekjes <span class="text--var">${toppings.bacon}</span></p>
+                    <div class="col-12 col-md-6">
+                        <div class="mb-0">
+                            <p class="mb-0">
+                            <h5 class="text--modern">Wijn</h5>
+                                Wit <span class="text--var">${drinks.wineWhite} flessen</span> &nbsp – &nbsp 
+                                Rood <span class="text--var">${drinks.wineRed} flessen</span>
+                            </p>
+                        </div>
+                        <div class="mb-0">
+                            <p class="mb-0">
+                            <h5 class="text--modern">Sappen</h5>
+                                Sinaas <span class="text--var">${drinks.juiceOrange} flessen</span> &nbsp – &nbsp 
+                                Worldmix <span class="text--var">${drinks.juiceWorldmix} flessen</span>
+                            </p>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
