@@ -100,6 +100,7 @@ const prijs_wijnen = 6.5,
 
 let totaalPrijs = 0
 const berekenPrijs = (o) => {
+    const {readyToEat, sauce, toppings, drinks} = o.order;
     let prijs = intToPrice(o.order.readyToEat.kids, prijs_kids) + 
     intToPrice(o.order.readyToEat.adult, prijs_adult) +
     intToPrice(o.order.sauce.small, prijs_500g) +
