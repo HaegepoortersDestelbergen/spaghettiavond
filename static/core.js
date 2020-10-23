@@ -5,7 +5,7 @@ import { node, Element, Api } from 'https://unpkg.com/cutleryjs/dist/js/index.js
  */
 
 const url = new URL(window.location.href);
-const email = url.searchParams.get('email');
+const email = url.searchParams.get('email') || 'Geen emailadres opgegeven';
 
 const getOrderData = async (userEmail = email) => {
     return await new Api(`https://spaghetti.haegepoorters.be/api?email=${userEmail}`).JSON();
