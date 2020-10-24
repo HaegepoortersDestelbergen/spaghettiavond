@@ -61,7 +61,7 @@ const renderOrders = (data) => {
                         <p class="mb-0">0,5 kilo <span class="text--var">${o.order.sauce.small} pot${o.order.sauce.small == 1 ? '' : 'ten'}</span> &nbsp – &nbsp 1 kilo <span class="text--var">${o.order.sauce.bigg} pot${o.order.sauce.bigg == 1 ? '' : 'ten'}</span></p>
                     </div>
                     <div class="col-12 col-md-6">
-                        <h5 class="mb-3">Vegitarisch</h5>
+                        <h5 class="mb-3">Vegetarisch</h5>
                         <h5 class="text--modern">Klaargemaakte porties (${prices.portions.kids}€ — ${prices.portions.adult}€ / portie)</h5>
                         <p class="mb-3">Kinder <span class="text--var">${o.order.readyToEatVegi.kids} porties</span> &nbsp – &nbsp Volwassen <span class="text--var">${o.order.readyToEatVegi.adult} porties</span></p>
                         
