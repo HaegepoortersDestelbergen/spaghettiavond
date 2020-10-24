@@ -45,7 +45,7 @@ const renderOrders = (data) => {
                     </div>
                 </div>
                 <div>
-                    <h3 class="mb-0 text-right">€${price._ORDER_TOTAL}</h3>
+                    <h3 class="mb-0 text-right">€${price._ORDER_TOTAL.priceSetComma()}</h3>
                     <h5 class="mb-0 text--modern text-right">Totaal</h5>
                 </div>
             </div>
@@ -122,6 +122,10 @@ const stringToPrice = (str, priceObj) => {
     return c;
 }
 
+Number.prototype.priceSetComma = function () {
+    return this.toString().replace('.', ',')
+}
+
 const prices = {
     _TOTAL: 0,
     _ORDER_TOTAL: 0,
@@ -180,7 +184,7 @@ getOrderData().then(data => {
     node('[data-label="orderList"]').innerHTML = '';
     renderOrders(data);
     feather.replace();
-    node('[data-label="total_price"]').innerHTML = `€${prices._TOTAL}`;
+    node('[data-label="total_price"]').innerHTML = `€${prices._TOTAL.priceSetComma()}`;
     node('[data-label="cart"]').classList.remove('d-none');
     node('[data-label="cart-note"]').innerHTML = `overschrijven naar <span>BE18 7360 3138 9365</span><br>
     mededeling <span>spaghetti bestelling ${orderIdNote.join('-')}</span>`
