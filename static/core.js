@@ -179,7 +179,7 @@ getOrderData().then(data => {
     feather.replace();
     node('[data-label="total_price"]').innerHTML = `€${prices._TOTAL}`;
     node('[data-label="cart"]').classList.remove('d-none');
-    node('[data-label="cart-note"]').innerHTML = `overschrijven naar <span>BE05734047216575</span><br>
+    node('[data-label="cart-note"]').innerHTML = `overschrijven naar <span>BE18 7360 3138 9365</span><br>
     mededeling <span>spaghetti bestelling ${orderIdNote.join('-')}</span>`
     node('[data-label="userEmail"]').classList.remove('d-none');
 });
