@@ -136,7 +136,7 @@ const prices = {
         bigg: 20
     },
     juice: 4,
-    wine: 7
+    wine: 10
 }
 
 const calculatePrices = ({readyToEat, readyToEatVegi, sauce, sauceVegi, toppings, method, drinks: {wineWhite, wineRed, juiceOrange, juiceWorldmix}}) => {
