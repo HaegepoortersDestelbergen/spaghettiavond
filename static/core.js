@@ -116,7 +116,10 @@ const intToPrice = (int, price = 0) => {
 }
 
 const stringToPrice = (str, priceObj) => {
-    return priceObj[str];
+    const c = priceObj[str];
+    prices._TOTAL += c;
+    prices._ORDER_TOTAL += c;
+    return c;
 }
 
 const prices = {
