@@ -8,7 +8,7 @@ body {
   /* font-family: basic-sans, sans-serif;
   font-weight: 400;
   font-style: normal; */
-  font-family: parisplus-std,sans-serif;
+  font-family: parisplus-std, sans-serif;
   font-weight: 400;
   font-style: normal; }
 
@@ -74,7 +74,8 @@ body {
   right: 0px;
   bottom: 0px;
   color: white;
-  transform: translateY(70%); }
+  transform: translateY(70%);
+  z-index: 100; }
   .cart:hover {
     transform: translateY(0%); }
   .cart__wrapper {
@@ -85,11 +86,12 @@ body {
       font-size: 1.6rem;
       color: inherit; }
   .cart__account-note {
+    font-size: 0.9rem;
     color: rgba(255, 255, 255, 0.651); }
     .cart__account-note span {
       color: white; }
   .cart__total {
-    padding: .4rem .8rem .6rem .8rem;
+    padding: .4rem .8rem .5rem .8rem;
     width: fit-content;
     background-color: rgba(255, 255, 255, 0.164);
     border-radius: 12px;

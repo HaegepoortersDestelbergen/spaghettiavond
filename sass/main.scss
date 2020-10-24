@@ -104,6 +104,7 @@ body {
     bottom: 0px;
     color: white;
     transform: translateY(70%);
+    z-index: 100;
 
     &:hover {
         transform: translateY(0%);
@@ -123,6 +124,7 @@ body {
     }
 
     &__account-note {
+        font-size: 0.9rem;
         color: rgba(255, 255, 255, 0.651);
 
         span {
@@ -131,7 +133,7 @@ body {
     }
 
     &__total {
-        padding: .4rem .8rem .6rem .8rem;
+        padding: .4rem .8rem .5rem .8rem;
         width: fit-content;
         background-color: rgba(255, 255, 255, 0.164);
         border-radius: 12px;
