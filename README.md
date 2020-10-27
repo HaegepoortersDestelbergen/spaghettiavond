@@ -1,5 +1,7 @@
-# spaghettiavond
+[Probleem](#probleem) | [Oplossing](#oplossing) | [Functies](#functies) | [Voorbeeld](https://spaghetti.haegepoorters.be/?email=webmaster@haegepoorters.be)
 
+---
+# spaghettiavond
 Deze applicatie haalt data op van een Google Sheet die gekoppeld is aan een Form.
 
 ### Probleem
